@@ -1,29 +1,79 @@
 import React,{useState} from 'react';
 
-const MainPage = () =>{
-    const start = (event) =>{
-        event.preventDefault();
-        alert('심리 검사를 시작하겠습니다.');
-      }; 
-      const [username,setUsername] = useState('');
+const MainPage = ({history}) =>{
+
+  const [inputs, setInputs] = useState({
+    name:"",
+    gender:"",
+  });
+  const {name, gender} = inputs;
+
     return(
-        <div className="App">
-      <header className="navigation">
-        <div>직업 심리 검사 서비스</div>
-      </header>
-      <form onSubmit={start}>
-        <h2>직업가치관검사</h2>
-        <label>이름</label><br/>
-        <input placeholder="이름" value={username} onChange={(e) => setUsername(e.target.value)} /><br /><br />
-        <label>성별</label><br />
-        <input id="male" type="radio"  value="남성" name="ss" />
-        <label for="male">남자</label><br />
+            
+            <div className="App">
+            {/* 유저 정보 입력 */}
+              
+                <h1>직업가치관검사</h1>
+                
+                <div>
+                  <label>이름</label><br/>
+                  <input
+                  type="text"
+                  name="name"
+                  placeholder="이름"
+                  value={name}
+                  onChange={(e) => {
+                    setInputs({
+                      ...inputs,
+                      [e.target.name]:e.target.value
+                      // https://dubaiyu.tistory.com/80
+                    });
+                  }} />
+                  <br /><br />
+                </div>
+
+                <div>
+                  <label>성별</label><br />
+                  <input
+                  type="radio"
+                  value="male"
+                  name="gender"
+                  onChange={(e) => {
+                    setInputs({
+                      ...inputs,
+                      [e.target.name]:e.target.value
+                    })
+                  }}/>
+                  <label for="male">남자</label><br />
+                  <input
+                  type="radio"
+                  value="female"
+                  name="gender"
+                  onChange={(e) => {
+                    setInputs({
+                      ...inputs,
+                      [e.target.name]:e.target.value
+                    })
+                  }}/>
+                  <label for="female">여자</label><br />
+                </div>
+            
+                <button 
+                type = "button"
+                disabled={
+                  name.length !== 0 &&
+                  gender.length !== 0
+                  ? false:true
+              }
+                onClick={(e) => {
+                  alert('심리 검사를 시작하겠습니다.');
+                  history.push("/ServiceStart")
+
+                }}>이동하기</button>
+                
+                
+            </div>
         
-        <input id="female" type="radio" checked value="여성" name="ss" />
-        <label for="female">여자</label><br /><br />
-        <button type="submit">검사시작</button>
-      </form>
-    </div>
     )
 
 };
