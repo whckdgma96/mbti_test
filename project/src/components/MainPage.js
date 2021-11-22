@@ -60,14 +60,20 @@ const MainPage = ({history}) =>{
             
                 <button 
                 type = "button"
-                disabled={
-                  name.length !== 0 &&
-                  gender.length !== 0
-                  ? false:true
-              }
+                //disabled={name.length===0 || gender.length===0}
                 onClick={(e) => {
-                  alert('심리 검사를 시작하겠습니다.');
-                  history.push("/ServiceStart")
+
+                  if (name.length!==0 && gender.length!==0) {
+                    alert('심리 검사를 시작하겠습니다!!😎');
+                    history.push("/ServiceStart")
+                  }
+                  else if(name.length===0){
+                    alert("이름을 입력해 주세요.😝")
+                  }
+                  else{
+                    alert("성별을 입력해 주세요.😝")
+                  }
+                  
 
                 }}>이동하기</button>
                 
