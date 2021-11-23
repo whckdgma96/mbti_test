@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import styled from "styled-components";
 
 const MainPage = ({history}) =>{
 
@@ -13,7 +14,7 @@ const MainPage = ({history}) =>{
             <div className="App">
             {/* 유저 정보 입력 */}
               
-                <h1>직업가치관검사</h1>
+                <h1>직업가치관검사</h1><br />
                 
                 <div>
                   <label>이름</label><br/>
@@ -36,7 +37,7 @@ const MainPage = ({history}) =>{
                   <label>성별</label><br />
                   <input
                   type="radio"
-                  value="male"
+                  value="남"
                   name="gender"
                   onChange={(e) => {
                     setInputs({
@@ -47,7 +48,7 @@ const MainPage = ({history}) =>{
                   <label for="male">남자</label><br />
                   <input
                   type="radio"
-                  value="female"
+                  value="여"
                   name="gender"
                   onChange={(e) => {
                     setInputs({
@@ -56,16 +57,16 @@ const MainPage = ({history}) =>{
                     })
                   }}/>
                   <label for="female">여자</label><br />
-                </div>
+                </div><br /><br />
             
-                <button 
+                <StartButton 
                 type = "button"
                 //disabled={name.length===0 || gender.length===0}
                 onClick={(e) => {
 
                   if (name.length!==0 && gender.length!==0) {
-                    alert('심리 검사를 시작하겠습니다!!😎');
-                    history.push("/ServiceStart")
+                    alert(`${name}(${gender})님 심리 검사를 시작하겠습니다!!😎`);
+                    history.push("/ServiceEx")
                   }
                   else if(name.length===0){
                     alert("이름을 입력해 주세요.😝")
@@ -75,7 +76,7 @@ const MainPage = ({history}) =>{
                   }
                   
 
-                }}>이동하기</button>
+                }}>검사시작</StartButton>
                 
                 
             </div>
@@ -83,5 +84,13 @@ const MainPage = ({history}) =>{
     )
 
 };
-
+const StartButton = styled.button`
+    text-align: center;
+    border: 0;
+    border-radius: 10px;
+    width: 20vw;
+    background: #96A5FF;
+    color: #fff;
+    font-size: 30px;
+`;
 export default MainPage;
