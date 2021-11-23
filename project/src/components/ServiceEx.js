@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import styled from "styled-components";
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
 
 const ServiceEx = ( { history } ) => {
     const [exData, setExData] = useState([]);
-    const [no1, setNo1] = useState(0);
+    const [progressbar, setProgressbar] = useState(0);
 
     useEffect(() =>{
         async function Question() {//비동기
@@ -24,6 +26,11 @@ const ServiceEx = ( { history } ) => {
         <div>
             <BackButton onClick={ () => {history.goBack()} }> 👈 </BackButton><br />
             <h1>검사 예시</h1>
+            <div>
+                <p>{progressbar}%</p>
+                <ProgressBar now={progressbar} label={`${progressbar}%`} />
+                
+            </div>
             <br/>
             <p> 직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.<br/>
                 가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
@@ -32,11 +39,11 @@ const ServiceEx = ( { history } ) => {
             <h6> Q{exData.qitemNo}. {exData.question}</h6>
                 <input type="radio" name="answer" value="answer"></input>
                 <label for="answer">{exData.answer01}</label> 
-                <p>{exData.answer03}</p>
+                ({exData.answer03})<br/>
 
                 <input type="radio" name="answer" value="answer"></input>
                 <label for="answer">{exData.answer02}</label>
-                <p>{exData.answer04}</p>
+                ({exData.answer04})
 
             </Textbox>
             <br/><br/>
@@ -55,8 +62,6 @@ const BackButton = styled.button`
     float:left;
     border: 0;
     background: white;
-
-
 `;
 
 const Textbox = styled.div`
