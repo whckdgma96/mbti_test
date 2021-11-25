@@ -66,7 +66,7 @@ const MainPage = ({history}) =>{
 
                   if (name.length!==0 && gender.length!==0) {
                     alert(`${name}(${gender})님 심리 검사를 시작하겠습니다!!😎`);
-                    history.push("/ServiceEx")
+                    history.push({pathname:`/ServiceEx/${name}`,state:{inputs:inputs}})
                   }
                   else if(name.length===0){
                     alert("이름을 입력해 주세요.😝")

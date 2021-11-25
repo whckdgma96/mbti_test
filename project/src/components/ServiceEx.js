@@ -4,10 +4,10 @@ import styled from "styled-components";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 
-const ServiceEx = ( { history } ) => {
+const ServiceEx = ( { history,location, useParams } ) => {//https://gongbu-ing.tistory.com/45
+    const inputs = location.state.inputs;
     const [exData, setExData] = useState([]);
     const [progressbar, setProgressbar] = useState(0);
-
     useEffect(() =>{
         async function Question() {//비동기
             try {
@@ -20,6 +20,7 @@ const ServiceEx = ( { history } ) => {
         } Question();
 
     },[]);
+    console.log(inputs);
     console.log(exData);
 
     return (
@@ -72,6 +73,7 @@ const TestSheet = styled.div`
     border : 100px;
     display: block;
     margin : auto;
+    border-radius: 10px;
 `;
 const StartButton = styled.button`
     text-align: center;

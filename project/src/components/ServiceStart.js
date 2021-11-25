@@ -4,13 +4,14 @@ import styled from "styled-components";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import ReactPaginate from "react-paginate";
 import './page.css';
-const ServiceStart = ({history}) =>{
-    const inputs = location.state.inputs; //state 전달용
+const ServiceStart = ({history,location}) =>{
+    //const inputs = location.state.inputs; //state 전달용
     const [exData, setExData] = useState([]);
     const [progressbar, setProgressbar] = useState(0);
     const [saveData, setSaveData] = useState({});
     const [pageNum, setPageNum] = useState(0);
     const [btnDisable, setBtnDisable] = useState(true);
+    const totalQuestion = [];
 
     const DataInPage = 5;
     const pages = pageNum * DataInPage;
@@ -37,7 +38,7 @@ const ServiceStart = ({history}) =>{
 
 
     useEffect(() =>{
-        async function Question() {//비동기
+        async function Question() {//비동기 https://developer.mozilla.org/ko/docs/Learn/JavaScript/Asynchronous/Async_await
             try {
                 const response = await axios.get(`https://www.career.go.kr/inspct/openapi/test/questions?apikey=b898f00caa8bcc71c4fc19598b84e9e1&q=6`);
                 setExData(response.data.RESULT);
@@ -50,25 +51,26 @@ const ServiceStart = ({history}) =>{
     },[]);
     // console.log(exData);
 
-    const displayDatas = exData
+    const displayedDatas = exData
         .slice(pages,pages+DataInPage)
         .map((item) => {
             return (
                 <div>
                     <TestSheet>
                         <h7>No.{item.qitemNo} {item.question}</h7>
-                        <div>
-                            <label for={item.answer01}>
-                                <input type="radio" name={item.qitemNo} value="0" onChange={dataSet}>
+                        <form>
+                            <label for="answer">
+                                <input type="radio" name={item.qitemNo} value={item.answer01} onChange={dataSet}>
                                 </input>{item.answer01}
                             </label>
                             
-                            <label for={item.answer02}>
-                                <input type="radio" name={item.qitemNo} value="1" onChange={dataSet}>
+                            <label for="radio">
+                                <input type="radio" name={item.qitemNo} value={item.answer02} onChange={dataSet}>
                                 </input>{item.answer02}
                             </label>
-                        </div>
+                        </form>
                     </TestSheet>
+                    <br/>
                 </div>
             )
         });
@@ -93,7 +95,7 @@ const ServiceStart = ({history}) =>{
             <h5>직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.<br/>
                 가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.</h5><br />
             <div>
-                {displayDatas}<br/>
+                {displayedDatas}<br/>
                 {/* 페이지네이션(참고)   https://www.npmjs.com/package/react-paginate */}
                 <ReactPaginate 
                     pageCount = {pageCount}
@@ -161,5 +163,6 @@ const TestSheet = styled.div`
     border : 100px;
     display: block;
     margin : auto;
+    border-radius: 10px;
 `;
 export default ServiceStart;

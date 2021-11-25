@@ -19,7 +19,7 @@ function App() {
         </header>
         <Route path="/" exact component = {MainPage} />
         <Route path="/ServiceEx" render={(props) =><ServiceEx {...props} />}/> 
-        <Route path="/ServiceStart" component = {ServiceStart} />
+        <Route path="/ServiceStart" render={(props) =><ServiceStart {...props} />}/> />
         <Route path="/ResultPage" component = {ResultPage} />
       </Router>
     </div>
