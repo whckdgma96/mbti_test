@@ -35,17 +35,17 @@ const ServiceEx = ( { history } ) => {
             <p> 직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.<br/>
                 가치의 뜻을 잘 모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
             </p><br />
-            <Textbox className='testSheet'>
-            <h6> Q{exData.qitemNo}. {exData.question}</h6>
+            <TestSheet className='testSheet'>
+            <h7> No.{exData.qitemNo} {exData.question}</h7><br />
                 <input type="radio" name="answer" value="answer"></input>
                 <label for="answer">{exData.answer01}</label> 
                 ({exData.answer03})<br/>
-
+ 
                 <input type="radio" name="answer" value="answer"></input>
                 <label for="answer">{exData.answer02}</label>
                 ({exData.answer04})
 
-            </Textbox>
+            </TestSheet>
             <br/><br/>
             <StartButton 
             onClick={ (event) => {
@@ -64,7 +64,7 @@ const BackButton = styled.button`
     background: white;
 `;
 
-const Textbox = styled.div`
+const TestSheet = styled.div`
     background-color: #E1F6FA;
     width: 70%;
     height:50%
