@@ -4,8 +4,10 @@ import styled from "styled-components";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 
-const ServiceEx = ( { history,location, useParams } ) => {//https://gongbu-ing.tistory.com/45
+const ServiceEx = ( { history,location} ) => {//https://gongbu-ing.tistory.com/45
+
     const inputs = location.state.inputs;
+    const {name, gender} = inputs;
     const [exData, setExData] = useState([]);
     const [progressbar, setProgressbar] = useState(0);
     useEffect(() =>{
@@ -51,7 +53,8 @@ const ServiceEx = ( { history,location, useParams } ) => {//https://gongbu-ing.t
             <StartButton 
             onClick={ (event) => {
                 alert('검사를 시작하겠습니다!!😎');
-                history.push("/ServiceStart")}}
+                history.push({pathname:`/ServiceStart/${name}`, state:{inputs:inputs}})
+                }}
                 disabled={!exData}
                 
                 > 검사시작 </StartButton>

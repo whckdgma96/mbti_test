@@ -77,8 +77,7 @@ const MainPage = ({history}) =>{
                   
 
                 }}>검사시작</StartButton>
-                
-                
+
             </div>
         
     )

@@ -4,27 +4,40 @@ import styled from "styled-components";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import ReactPaginate from "react-paginate";
 import './page.css';
+
 const ServiceStart = ({history,location}) =>{
-    //const inputs = location.state.inputs; //state 전달용
+    
+    const inputs = location.state.inputs; //state 전달용
+    const {name, gender} = inputs;
     const [exData, setExData] = useState([]);
     const [progressbar, setProgressbar] = useState(0);
-    const [saveData, setSaveData] = useState({});
+    
     const [pageNum, setPageNum] = useState(0);
     const [btnDisable, setBtnDisable] = useState(true);
-    const totalQuestion = [];
 
     const DataInPage = 5;
     const pages = pageNum * DataInPage;
 
 
+    const inputsInitial = {}
+    for (let i = 1; i < exData.length; i++){
+        inputsInitial[`B${i}`] = "";
+    }
+    const [saveData, setSaveData] = useState(inputsInitial);
+
+    console.log(inputs);
+    console.log(saveData);
+
     const dataSet = (e) =>{
         let keyname = e.target.name;
-        const {value} = e.target;
+        const {value, name} = e.target;
 
-        setSaveData({
-            ...saveData,
-            [keyname]:value
-        })
+        setSaveData((cur) => {
+            let copiedSetSaveData = {...cur};
+            copiedSetSaveData[name] = value;
+            return copiedSetSaveData;
+        });
+
         if(Object.keys(saveData).length ===27){
             return(
                 setProgressbar(100),
@@ -34,7 +47,8 @@ const ServiceStart = ({history,location}) =>{
             return 
         }
     }
-    console.log(Object.keys(saveData).length)
+    const userInputs = []
+    var answers=[]
 
 
     useEffect(() =>{
@@ -49,26 +63,41 @@ const ServiceStart = ({history,location}) =>{
         } Question();
 
     },[]);
-    // console.log(exData);
+    //console.log(exData);
+
+    useEffect(() =>{
+        if(Object.keys(saveData).length ===exData.length){
+            for (let input of Object.entries(saveData)){
+                userInputs.push(input.join("="));
+                console.log(userInputs)
+                answers = userInputs.join(" ");
+                console.log(answers)
+            }
+        }
+    },[saveData]);
+
+    console.log(answers)
+
+
 
     const displayedDatas = exData
         .slice(pages,pages+DataInPage)
-        .map((item) => {
+        .map((item,idx) => {
             return (
                 <div>
                     <TestSheet>
                         <h7>No.{item.qitemNo} {item.question}</h7>
-                        <form>
+                        <div>
                             <label for="answer">
-                                <input type="radio" name={item.qitemNo} value={item.answer01} onChange={dataSet}>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore01} onChange={dataSet} checked = {saveData[String(idx+1)] ===item.answerScore01 ? true : false}>
                                 </input>{item.answer01}
                             </label>
                             
                             <label for="radio">
-                                <input type="radio" name={item.qitemNo} value={item.answer02} onChange={dataSet}>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore02} onChange={dataSet} checked={saveData[String(idx+1)] === item.answerScore02 ? true : false}>
                                 </input>{item.answer02}
                             </label>
-                        </form>
+                        </div>
                     </TestSheet>
                     <br/>
                 </div>
@@ -79,6 +108,7 @@ const ServiceStart = ({history,location}) =>{
     const onPageChange = ({selected}) => {
         setPageNum(selected);
     };
+    console.log(inputsInitial)
     console.log(pageNum)
 
 
@@ -116,11 +146,11 @@ const ServiceStart = ({history,location}) =>{
 
                     nextLabel = {
                         <NextButton
-                            disabled={btnDisable && Object.keys(saveData).length % 5 !== 0 || pageNum * 5 == Object.keys(saveData).length}
+                            disabled={btnDisable && Object.keys(saveData).length % 5 !== 0 || pageNum * 5 === Object.keys(saveData).length}
                             onClick={(e) => {
                                 if (progressbar === 100){
-                                    history.push("/ResultPage")
-                                    alert('검사가 완료되었습니다. 결과를 기다려 주십시오.🧐');
+                                    history.push({pathname:`/ResultPage/${name}`,state:{inputs:inputs,answers:answers}})
+                                    alert('결과를 분석중입니다. 결과를 기다려 주십시오.🧐');
                                 }else{
                                     setProgressbar(progressbar+18)
                                 }
