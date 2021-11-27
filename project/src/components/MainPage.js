@@ -61,7 +61,6 @@ const MainPage = ({history}) =>{
             
                 <StartButton 
                 type = "button"
-                //disabled={name.length===0 || gender.length===0}
                 onClick={(e) => {
 
                   if (name.length!==0 && gender.length!==0) {

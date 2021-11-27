@@ -1,11 +1,10 @@
-import './App.css';
-import React, {useState, useEffect} from 'react';
+import './css/App.css';
+import './css/EndPage.css';
 import MainPage from './components/MainPage';
 import ServiceEx from './components/ServiceEx';
 import ResultPage from './components/ResultPage';
 import ServiceStart from './components/ServiceStart';
 import EndPage from './components/EndPage';
-
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

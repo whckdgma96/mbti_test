@@ -18,6 +18,8 @@ const ServiceStart = ({history,location}) =>{
     const DataInPage = 5;
     const pages = pageNum * DataInPage;
 
+    console.log(exData);
+
 
     const inputsInitial = {}
     for (let i = 1; i < exData.length; i++){
@@ -89,12 +91,12 @@ const ServiceStart = ({history,location}) =>{
                         <h7>No.{item.qitemNo} {item.question}</h7>
                         <div>
                             <label for="answer">
-                                <input type="radio" name={item.qitemNo} value={item.answerScore01} onChange={dataSet} checked = {saveData[String(idx+1)] ===item.answerScore01 ? true : false}>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore01} onChange={dataSet} unchecked = ''>
                                 </input>{item.answer01}
                             </label>
                             
                             <label for="radio">
-                                <input type="radio" name={item.qitemNo} value={item.answerScore02} onChange={dataSet} checked={saveData[String(idx+1)] === item.answerScore02 ? true : false}>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore02} onChange={dataSet} unchecked = ''>
                                 </input>{item.answer02}
                             </label>
                         </div>
