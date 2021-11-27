@@ -23,7 +23,7 @@ const ServiceStart = ({history,location}) =>{
 
     const inputsInitial = {}
     for (let i = 1; i < exData.length; i++){
-        inputsInitial[`B${i}`] = "";
+        inputsInitial[`${i}`] = "";
     }
     const [saveData, setSaveData] = useState(inputsInitial);
 
@@ -84,19 +84,19 @@ const ServiceStart = ({history,location}) =>{
 
     const displayedDatas = exData
         .slice(pages,pages+DataInPage)
-        .map((item,idx) => {
+        .map((item) => {
             return (
                 <div>
                     <TestSheet>
                         <h7>No.{item.qitemNo} {item.question}</h7>
                         <div>
                             <label for="answer">
-                                <input type="radio" name={item.qitemNo} value={item.answerScore01} onChange={dataSet} unchecked = ''>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore01} onChange={dataSet} checked={saveData[String(item.qitemNo)] === item.answerScore01 ? true : false }>
                                 </input>{item.answer01}
                             </label>
                             
                             <label for="radio">
-                                <input type="radio" name={item.qitemNo} value={item.answerScore02} onChange={dataSet} unchecked = ''>
+                                <input type="radio" name={item.qitemNo} value={item.answerScore02} onChange={dataSet} checked={saveData[String(item.qitemNo)] === item.answerScore02 ? true : false }>
                                 </input>{item.answer02}
                             </label>
                         </div>

@@ -38,10 +38,10 @@ const EndPage = ({history,location}) =>{
                         `http://www.career.go.kr/inspct/openapi/test/report?apikey=b898f00caa8bcc71c4fc19598b84e9e1&qestrnSeq=6`, userForm
                     );
                     //seq값 가져오기
+                    console.log(response.data.RESULT['url'])
                     seq = response.data.RESULT['url'].split("seq=")[1];
-                    //console.log(response.data.RESULT['url'])
                     console.log('POST 불러오기');
-                    //console.log(seq) 
+                    //console.log(seq) NTU2MTg5MjA
                 } catch(e){
                     console.log('POST Error');
                 }
@@ -57,6 +57,7 @@ const EndPage = ({history,location}) =>{
                         getMaxNum.push([parseInt(wonScoreValue[1]),wonScoreValue[0]])
                     }
                     let maxNums = []
+                    //젤높은2개 추출
                     for (let i = 0; i < getMaxNum.length; i++){
                         if (maxNums.length < 2){
                             maxNums.push(getMaxNum[i])
@@ -64,7 +65,7 @@ const EndPage = ({history,location}) =>{
                         } else {
                             for (let j = 0; j < maxNums.length; j++){
                                 if (maxNums[j][0] < getMaxNum[i][0]){
-                                    maxNums.shift()
+                                    maxNums.shift() //첫요소제거 & 반환
                                     maxNums.push(getMaxNum[i])
                                     maxNums.sort()
                                 }
@@ -73,6 +74,7 @@ const EndPage = ({history,location}) =>{
                     }
                     Num1 = maxNums[1][1];
                     Num2 = maxNums[0][1];
+                    console.log(Num1, Num2);
                     console.log('JSON DATA GET요청')
                 }catch(e){
                     console.log('GET Error');
@@ -105,6 +107,7 @@ const EndPage = ({history,location}) =>{
 // 직업 관련 차트
     function ShowJobInfo(){
         const graduateCollege = jobInfo
+        //배열의 예시 [1259,"마술사",2] 123 = 전문대, 4 = 대, 5 = 대학원
         .filter((item) => {
             return item[2] === 1 || item[2] === 2 || item[2] === 3
         })
@@ -136,7 +139,7 @@ const EndPage = ({history,location}) =>{
                 <h3>종사자 평균 학력별</h3>
                 <table>
                     <th className="job-col1">분야</th>
-                    <th className="job-col2">직업</th>
+                    <th className="job-col2">직업명</th>
                     <tr>
                         <td>전문대졸</td>
                         <td>{graduateCollege}</td>
@@ -160,7 +163,7 @@ function ShowMajorInfo(){
         <h3>종사자 평균 전공별</h3>
         <table>
             <th className="major-col1">분야</th>
-            <th className="major-col2">직업</th>
+            <th className="major-col2">직업명</th>
             <tr>
                 <td>계열무관</td>
                 <td>
@@ -281,9 +284,7 @@ function ShowMajorInfo(){
         const wonScore = jsonData.result['wonScore'];
         const wonScoreList = [];
         const wonScoreData = wonScore
-            .split(" ")
-            .map((item)=>{return item.split("=")[1]})
-            .forEach((item)=>{wonScoreList.push(item)})
+            .split(" ").map((item)=>{return item.split("=")[1]}).forEach((item)=>{wonScoreList.push(item)})
         return (
           <div className="chartBarContainer">
             { wonScoreList.map((item) => {
